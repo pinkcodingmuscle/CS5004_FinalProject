@@ -26,15 +26,6 @@ public class ContentNode <T> implements INode <T> {
     return 1 + next.count();
   }
 
-  // count helper method
-  @Override
-  public int countHelp(int acc) {
-    if (next == null) {
-      return 1 + acc;
-    }
-    return next.countHelp(1 + acc);
-  }
-
   @Override
   public INode<T> addFront(T data) {
     return new ContentNode<T>(data, this);

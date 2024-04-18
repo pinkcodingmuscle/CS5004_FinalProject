@@ -1,4 +1,6 @@
 /**
+ * Name: Esther Mukuye
+ * Date: 4/16/24
  * This class contains the methods a date object performs on itself.
  * A date has a day, month and a year
  */
@@ -67,11 +69,16 @@ public class IDateImpl <T> implements IDate<T>, Comparable <IDateImpl <T>> {
       this.year = year;
     }
   }
-
   // this method compares two dates
   @Override
   public int compareTo(IDateImpl<T> date) {
-    return this.toString().compareTo(String.valueOf(date));
+    if (this.year != date.year) {
+      return Integer.compare(this.year, date.year);
+    }
+    if (this.month != date.month) {
+      return Integer.compare(this.month, date.month);
+    }
+    return Integer.compare(this.day, date.day);
   }
 
   // this method compares one object to another for equality

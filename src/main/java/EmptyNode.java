@@ -2,7 +2,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 /**
  * Name: Esther Mukuye
- * Date: 3/29/24
+ * Date: 4/16/24
  *
  * This class implements the Node interface and is responsible for terminating a list
  */
@@ -14,11 +14,6 @@ public class EmptyNode <T> implements INode <T>{
   @Override
   public int count(){
     return 0;
-  }
-
-  @Override
-  public int countHelp(int acc) {
-    return acc;
   }
 
   @Override

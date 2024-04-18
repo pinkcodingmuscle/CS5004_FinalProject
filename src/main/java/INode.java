@@ -3,7 +3,7 @@ import java.util.function.Predicate;
 
 /**
  * Name: Esther Mukuye
- * Date: 4/15/24
+ * Date: 4/16/24
  *
  * Node interface to establish polymorphic use of a Node
  *
@@ -12,10 +12,6 @@ import java.util.function.Predicate;
 interface INode <T> {
   //returns the number of objects in the list
   int count();
-
-  // helper method for accumulator of count
-  int countHelp(int acc);
-
   // adds the given object at front of the list and returns a modified list
   INode<T> addFront(T b);
 
@@ -30,7 +26,7 @@ interface INode <T> {
   INode<T> addNodeAtIndex(int position, T b) throws IllegalArgumentException;
 
   //removes the first instance of an object from a list
-  INode<T> remove(T b);
+  INode <T> remove(T b);
 
   // get the object at the specified location
   T getNodeContent(int position) throws IllegalArgumentException;

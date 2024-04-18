@@ -1,10 +1,16 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+/**
+ * Name: Esther Mukuye
+ * Date: 4/16/24
+ *
+ * This class acts as the controller and relays information between the view and the model
+ */
 
 public class JobPostController <T> {
   private final JobPostView <T>  v;
   private final JobPostModel<T> m;
-  private static Scanner scanner;
   private T JobPostingImpl;
 
   public JobPostController(JobPostModel <T> m, JobPostView <T> v) {
@@ -13,118 +19,78 @@ public class JobPostController <T> {
   }
 
   public void run(){
-    JobPostModel<JobPostingImpl> jobPostList = new JobPostModel<>();
-    scanner = new Scanner(System.in);
-    MenuOptions.printUserMenuOptions();
-    int choice = getUserChoice();
-    switch (choice) {
+    Scanner scanner = new Scanner(System.in);
+    // while loop to control the flow of the application
+    v.welcomeMessage();
+    MenuOptions.validateUser();
+    int option = scanner.nextInt();
+    switch (option) {
       case 1:
-        m.toString();
+        adminUser();
         break;
       case 2:
-        System.out.print("Enter Job Id: ");
-        int id = scanner.nextInt();
-
-        System.out.print("Enter a Job Title: ");
-        String jobTitle = scanner.next();
-
-        System.out.println("Enter a job description: ");
-        String jobDescription = scanner.nextLine();
-
-        Department department = null;
-        while (department == null) {
-          System.out.println("Enter a department (FINANCE, IT, SALES): ");
-          String dept = scanner.next().toUpperCase().strip();
-          try {
-            department = Department.valueOf(dept);
-          } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input. Please try again.");
-          }
-        }
-
-        JobLocation jobLocation = null;
-        while (jobLocation == null) {
-          System.out.println("Enter a location from the following options (PHOENIX, BOSTON, DALLAS): ");
-          String location = scanner.next().toUpperCase().strip();
-          try {
-            jobLocation = JobLocation.valueOf(location);
-          } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input. Please try again.");
-          }
-        }
-
-        JobType type = null;
-        while (type == null) {
-          System.out.println("Enter a Job Type (NWS, WS): ");
-          String jobType = scanner.next().toUpperCase().strip();
-          try {
-            type = JobType.valueOf(jobType);
-          } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input. Please try again.");
-          }
-        }
-
-        System.out.println("Enter an hourly rate: ");
-        double hourlyRate = scanner.nextDouble();
-
-        IDateImpl date = null;
-        while (date == null){
-          System.out.println("Application Deadline:- ");
-          System.out.println("Enter a month: ");
-          int month = scanner.nextInt();
-          System.out.println("Enter a day: ");
-          int day = scanner.nextInt();
-          System.out.println("Enter a year (YYYY): ");
-          int year = scanner.nextInt();
-          date = new IDateImpl<>(month, day, year);
-        }
-
-        EmploymentType employmentType = null;
-        while (employmentType == null) {
-          System.out.println("Is this job full time or part time (FT, PT): ");
-          String employmentJobType = scanner.next().toUpperCase().strip();
-          try {
-            employmentType = EmploymentType.valueOf(employmentJobType);
-          } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input. Please try again.");
-          }
-        }
-
-        //JobPostModel <JobPostingImpl> list = new JobPostModel<>();
-        System.out.println("Would you like to save this job posting? (Y or N): ");
-        String save = scanner.next().toUpperCase().strip();
-        System.out.println("Which file would you like to save this to?: ");
-        String fileName = scanner.next();
-        jobPostList.addNode(new JobPostingImpl(id, jobTitle, jobDescription, department, jobLocation, type,
-                hourlyRate, date, employmentType));
-        if (save.equals("Y")) {
-          try {
-            WriteToFile.writeToFile(fileName, jobPostList);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-        else System.out.println("This job posting has not been saved.");
+        viewJobs();
+        System.out.println();
+        System.out.println();
         break;
-
       case 3:
-        MenuOptions.updateJobPosting();
-        break;
-      case 4:
-        m.remove(JobPostingImpl);
-        break;
-      case 5:
-        System.exit(choice);
+        System.out.println(MenuOptions.goodbyeMessage);
+        System.exit(3);
         break;
       default:
         System.out.println("Invalid choice!");
-        MenuOptions.printUserMenuOptions();
+    }
+    scanner.close();
+  }
+
+  public static void viewJobs(){
+    // display the tasks saved in file
+    try{
+      System.out.println("\t\t\t\t\tJOB POSTINGS\t\t\t\t\t");
+      File fileName = new File("jobListings.txt");
+      Scanner fileScanner = new Scanner(fileName);
+      while (fileScanner.hasNextLine()){
+        System.out.println(fileScanner.nextLine());
+      }
+      fileScanner.close();
+    } catch (IOException e) {
+      System.out.println("File not found.");
     }
   }
 
+  public static int userChoice(){
+    try(Scanner scanner = new Scanner(System.in)){
+      return scanner.nextInt();
+    }
+  }
 
-  public static int getUserChoice(){
-    return scanner.nextInt();
+  public void adminUser(){
+    Scanner scanner = new Scanner(System.in);
+    boolean quit = false;
+    // while loop to control the flow of the application
+    //while (!quit){
+    MenuOptions.printAdminMenuOptions();
+    int choice = scanner.nextInt();
+    switch (choice) {
+      case 1:
+        viewJobs();
+        System.out.println();
+        System.out.println();
+        break;
+      case 2:
+        v.getUserPrompt();
+        break;
+      case 3:
+        quit = true;
+        break;
+      default:
+        System.out.println("Invalid choice!");
+      //}
+    }
+    // close scanner to release resources
+    scanner.close();
+    System.out.println(MenuOptions.goodbyeMessage);
+    System.out.println();
   }
 
 }

@@ -1,24 +1,29 @@
+import java.util.Date;
+
+
 /**
+ * Name: Esther Mukuye
+ * Date: 4/16/24
  *
+ * This class implements the JobPosting interface and contains methods for creating a job post object
  */
 
-public class JobPostingImpl implements JobPosting{
-  private final int jobId;
-  private final String jobTitle;
-  private final String jobDescription;
-  private final Department jobDepartment;
-  private final JobLocation jobLocation;
-  private final JobType jobType;
-  private final double hourlyRate;
-  private final IDate applicationDeadline;
-  private final EmploymentType employmentType;
-  private static int idGenerator = 1;
+public class JobPostingImpl <T> implements JobPosting <T>{
+  private int jobId;
+  private String jobTitle;
+  private String jobDescription;
+  private Department jobDepartment;
+  private JobLocation jobLocation;
+  private JobType jobType;
+  private double hourlyRate;
+  private IDate <T> applicationDeadline;
+  private EmploymentType employmentType;
 
 
   public JobPostingImpl(int jobId, String jobTitle, String jobDescription, Department jobDepartment,
-                        JobLocation jobLocation, JobType jobType, double hourlyRate, IDate applicationDeadline,
+                        JobLocation jobLocation, JobType jobType, double hourlyRate, IDate <T> applicationDeadline,
                         EmploymentType employmentType){
-    this.jobId = idGenerator++;
+    this.jobId = jobId;
     this.jobTitle = jobTitle;
     this.jobDescription = jobDescription;
     this.jobDepartment = jobDepartment;
@@ -27,81 +32,111 @@ public class JobPostingImpl implements JobPosting{
     this.hourlyRate = hourlyRate;
     this.applicationDeadline = applicationDeadline;
     this.employmentType = employmentType;
-
-
   }
 
-  /**
-   * @return jobId
-   */
   @Override
   public int getJobId() {
     return jobId;
   }
 
-  /**
-   * @return jobId
-   */
+  @Override
+  public void setJobId(int jobId) {
+    this.jobId = jobId;
+  }
+
   @Override
   public String getJobTitle() {
     return jobTitle;
   }
 
+  @Override
+  public void setJobTitle(String title) {
+    this.jobTitle = jobTitle;
+  }
 
-  /**
-   * @return jobDescription
-   */
+
   @Override
   public String getJobDescription() {
     return jobDescription;
   }
 
-  /**
-   * @return department
-   */
+  @Override
+  public void setJobDescription(String description) {
+    this.jobDescription = jobDescription;
+  }
+
   @Override
   public Department getDepartment() {
     return jobDepartment;
   }
 
-  /**
-   * @return job location
-   */
+  @Override
+  public void setDepartment(Department department) {
+    this.jobDepartment = department;
+  }
+
   @Override
   public JobLocation getLocation() {
     return jobLocation;
   }
 
-  /**
-   * @return job type
-   */
+  @Override
+  public void setLocation(JobLocation location) {
+    this.jobLocation = location;
+  }
+
+
   @Override
   public JobType getJobType() {
     return jobType;
   }
 
-  /**
-   * @return hourly rate
-   */
+  @Override
+  public void setJobType(JobType jobType) {
+    this.jobType = jobType;
+  }
+
   @Override
   public double getHourlyRate() {
     return hourlyRate;
   }
 
-  /**
-   * @return application deadline
-   */
   @Override
-  public IDate getApplicationDeadline() {
+  public void setHourlyRate(Double wage) {
+    this.hourlyRate = wage;
+  }
+
+  @Override
+  public IDate<T> getApplicationDeadline() {
     return applicationDeadline;
   }
 
-  /**
-   * @return employment type
-   */
+  @Override
+  public void setApplicationDeadline(IDate<T> date) {
+    this.applicationDeadline = date;
+  }
+
   @Override
   public EmploymentType getEmploymentType() {
     return employmentType;
+  }
+
+  @Override
+  public void setEmploymentType(EmploymentType employmentType) {
+    this.employmentType = employmentType;
+  }
+
+  // returns an old job posting by comparing the date of a task against another
+  public Boolean isExpired(IDateImpl <T> date){
+    boolean bool = false;
+    if (this.applicationDeadline.getYear() > date.getYear()){
+      bool = true;
+    } else if (this.applicationDeadline.getYear() == date.getYear() && this.applicationDeadline.getMonth() > date.getMonth()) {
+      bool = true;
+    } else if (this.applicationDeadline.getYear() == date.getYear() && this.applicationDeadline.getMonth() > date.getMonth() && this.applicationDeadline.getDay() > date.getMonth() ) {
+      bool = true;
+    }
+    return bool;
   }
 
   @Override
