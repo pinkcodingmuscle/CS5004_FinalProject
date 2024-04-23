@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -8,23 +7,23 @@ import java.util.function.Predicate;
  * Name: Esther Mukuye
  * Date: 4/16/24
  *
- * This class implements the IModel interface and contains the linked list methods
+ * This class implements the ADTList interface and contains the linked list methods
  */
 
 
-public class JobPostModel <T> implements IModel <T> {
+public class ADTListImpl <T> implements ADTList<T> {
   private INode<T> head;
 
   // Constructors
-  public JobPostModel() {
+  public ADTListImpl() {
     this.head = new EmptyNode<>();
   }
 
-  public JobPostModel(T t) {
+  public ADTListImpl(T t) {
     this.head = new ContentNode<>(t, new EmptyNode <>());
   }
 
-  private JobPostModel(INode<T> head) {
+  private ADTListImpl(INode<T> head) {
     this.head = head;
   }
 
@@ -56,17 +55,17 @@ public class JobPostModel <T> implements IModel <T> {
   }
 
   @Override
-  public <R> IModel <R> map(Function<T, R> mapper) {
-    return new JobPostModel<>(head.map(mapper));
+  public <R> ADTList<R> map(Function<T, R> mapper) {
+    return new ADTListImpl<>(head.map(mapper));
   }
 
   @Override
-  public IModel <T> filter(Predicate<T> tester) {
-    return new JobPostModel<>(head.filter(tester));
+  public ADTList<T> filter(Predicate<T> tester) {
+    return new ADTListImpl<>(head.filter(tester));
   }
 
-  public List<JobPostModel<T>> toList(Predicate<JobPostModel<T>> predicate) {
-    List<JobPostModel<T>> result = new ArrayList<>();
+  public List<ADTListImpl<T>> toList(Predicate<ADTListImpl<T>> predicate) {
+    List<ADTListImpl<T>> result = new ArrayList<>();
     if(predicate.test(this))result.add(this);
     return result;
   }

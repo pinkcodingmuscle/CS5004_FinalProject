@@ -1,11 +1,9 @@
-import java.util.Date;
-
 public class TestDriver {
 
 
   public static void main(String[] args) {
 
-    JobPostModel <JobPostingImpl> jobPostList = new JobPostModel<>();
+    ADTListImpl <JobPostingImpl> jobPostList = new ADTListImpl<>();
 
     jobPostList.addNode(new JobPostingImpl <>(1, "Java Developer", """
             Proficiency in Java, \
@@ -32,17 +30,17 @@ public class TestDriver {
     // this uses lambda expression to return a list of job postings that are past a given date
     //IDateImpl d1 = new IDateImpl(4,4,2024);
     //Date d1 = new Date(2024,4,4);
-    // IModel <JobPostingImpl> list = jobPostList.filter(m -> !! m.isExpired(d1));
+    // ADTList <JobPostingImpl> list = jobPostList.filter(m -> !! m.isExpired(d1));
     //System.out.println(list);
 
     //fold function to return the number of items in the list
     //System.out.println("Number of items in list: " + jobPostList.getSize());
 
     // this uses a lambda function to return a list with the job title capitalized
-    // IModel <JobPostingImpl> list3 = jobPostList.map(p -> p.setJobTitle(p.getJobTitle().toUpperCase()));
+    // ADTList <JobPostingImpl> list3 = jobPostList.map(p -> p.setJobTitle(p.getJobTitle().toUpperCase()));
 
 
-   JobPostController c  = new JobPostController<>(new JobPostModel<>(), new JobPostView<>());
+   JobPostController c  = new JobPostController<>(new JobPostManager<>(), new JobPostView<>());
     c.run();
 
 

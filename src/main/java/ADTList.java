@@ -5,10 +5,10 @@ import java.util.function.Predicate;
  * Name: Esther Mukuye
  * Date: 4/16/24
  *
- * IModel interface to establish polymorphic use of a job posting manager
+ * ADTList interface to establish polymorphic use of a job posting manager
  *
  */
-public interface IModel<T> {
+public interface ADTList<T> {
   void addNode(T b);
   // adds an object to this list so that it occupies the provided index
   void add(int index, T b);
@@ -19,8 +19,8 @@ public interface IModel<T> {
   // get the index of an object in the list
   T getNodeContent(int index) throws IllegalArgumentException;
   // Map higher order function that returns the corresponding list of type R
-  <R> IModel<R> map(Function<T,R> mapper);
+  <R> ADTList<R> map(Function<T,R> mapper);
   // filter higher order function that returns a new list based on the set predicate
-  IModel<T> filter (Predicate <T> tester);
+  ADTList<T> filter (Predicate <T> tester);
 }
 

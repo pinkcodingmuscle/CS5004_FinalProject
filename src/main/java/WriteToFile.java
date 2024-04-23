@@ -11,14 +11,14 @@ import java.io.*;
 public class WriteToFile{
 
   private String fileName;
-  private final JobPostModel list;
+  private final ADTListImpl list;
 
-  public WriteToFile(String fileName, JobPostModel<JobPostingImpl > list) {
+  public WriteToFile(String fileName, ADTListImpl<JobPostingImpl> list) {
     this.fileName = fileName;
     this.list = list;
   }
 
-  public static void writeToFile (String fileName, JobPostModel<JobPostingImpl> list)throws IOException {
+  public static void writeToFile (String fileName, ADTListImpl<JobPostingImpl> list)throws IOException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + ".txt", true))){
       //String[] header = {"ID", "", "DESCRIPTION", "DEPARTMENT", "LOCATION", "JOB TYPE", "HOURLY RATE",
       //"APPLICATION DEADLINE", "EMPLOYMENT TYPE"};

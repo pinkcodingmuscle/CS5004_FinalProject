@@ -10,10 +10,10 @@ import java.util.Scanner;
 
 public class JobPostController <T> {
   private final JobPostView <T>  v;
-  private final JobPostModel<T> m;
+  private final JobPostManager<T> m;
   private T JobPostingImpl;
 
-  public JobPostController(JobPostModel <T> m, JobPostView <T> v) {
+  public JobPostController(JobPostManager <T> m, JobPostView <T> v) {
     this.m = m;
     this.v = v;
   }
@@ -29,7 +29,7 @@ public class JobPostController <T> {
         adminUser();
         break;
       case 2:
-        viewJobs();
+        m.viewJobs();
         System.out.println();
         System.out.println();
         break;
@@ -43,20 +43,7 @@ public class JobPostController <T> {
     scanner.close();
   }
 
-  public static void viewJobs(){
-    // display the tasks saved in file
-    try{
-      System.out.println("\t\t\t\t\tJOB POSTINGS\t\t\t\t\t");
-      File fileName = new File("jobListings.txt");
-      Scanner fileScanner = new Scanner(fileName);
-      while (fileScanner.hasNextLine()){
-        System.out.println(fileScanner.nextLine());
-      }
-      fileScanner.close();
-    } catch (IOException e) {
-      System.out.println("File not found.");
-    }
-  }
+
 
   public static int userChoice(){
     try(Scanner scanner = new Scanner(System.in)){
@@ -73,7 +60,7 @@ public class JobPostController <T> {
     int choice = scanner.nextInt();
     switch (choice) {
       case 1:
-        viewJobs();
+        m.viewJobs();
         System.out.println();
         System.out.println();
         break;

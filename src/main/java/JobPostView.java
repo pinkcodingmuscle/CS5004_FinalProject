@@ -15,7 +15,7 @@ public class JobPostView <T> implements IView <T>{
 
   @Override
   public void getUserPrompt() {
-    JobPostModel<JobPostingImpl> jobPostList = new JobPostModel<>();
+    ADTListImpl<JobPostingImpl> jobPostList = new ADTListImpl<>();
     Scanner scanner = new Scanner(System.in);
     scanner.nextLine();
     System.out.print("Enter Job Id: ");
